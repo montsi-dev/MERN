@@ -2,16 +2,23 @@ const router = require("express").Router();
 const auth = require("../middleware/auth");
 const Note = require("../models/noteModel");
 
-router.post("/", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
+  const notes = await Note.find({ userId: req.user });
+  res.json(notes);
+});
+
+router.post("/add", auth, async (req, res) => {
   try {
     const { title } = req.body;
+    const { text } = req.body;
 
     // validation
-    if (!title)
+    if (!title || !text)
       return res.status(400).json({ msg: "Not all fields have been entered." });
 
     const newNote = new Note({
       title,
+      text,
       userId: req.user,
     });
     const savedNote = await newNote.save();
@@ -21,9 +28,30 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-router.get("/all", auth, async (req, res) => {
-  const stories = await Note.find({ userId: req.user });
-  res.json(stories);
+router.get("/:id", auth, async (req, res) => {
+  const id = req.params.id;
+  const note = await Note.findById(id);
+  res.json(note);
+});
+
+router.post("/:id", auth, async (req, res) => {
+  const id = req.params.id;
+
+  const note = await Note.findById(id, (err, note) => {
+    if (!note) {
+      res.status(404).send("Note not found");
+    } else {
+      const { title, text } = req.body;
+      note.title = title;
+      note.text = text;
+      note
+        .save()
+        .then((note) => {
+          res.json(note);
+        })
+        .catch((err) => res.status(500).send(err.message));
+    }
+  });
 });
 
 router.delete("/:id", auth, async (req, res) => {

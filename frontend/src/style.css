@@ -7,7 +7,7 @@
 }
 
 a {
-  color: #2199df;
+  color: #b0eacd;
   text-decoration: unset;
 }
 
@@ -55,13 +55,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #7c0e0e;
+  background-color: #21bf73;
 }
 
 #header .title {
   margin: 0;
   padding: 0 1rem;
-  color: #fff;
+  color: #f9fcfb;
 }
 
 #header .auth-options {
@@ -71,55 +71,19 @@ body {
 
 #header .auth-options button {
   padding: 0 1rem;
-  background-color: #310404;
-  color: #fff;
+  color: #f9fcfb;
   font-size: 1.1rem;
 }
 
 #header .auth-options button:hover {
-  background-color: #331212;
-}
-
-/* form */
-
-.form label,
-.form input {
-  display: block;
-}
-
-.form input {
-  margin-bottom: 1rem;
-}
-
-.form label {
-  margin-bottom: 0.2rem;
-}
-
-.form input [type="text"],
-.form input [type="email"],
-.form input [type="password"] {
-  width: 100%;
-  padding: 0.3rem;
-  border: 1px solid #c2c2c2;
-  background-color: #f0f0f0;
-  font-size: 1.1rem;
-}
-
-.form input:focus {
-  border: 1px solid rgb(47, 149, 233);
-  box-shadow: inset 0px 0px 5px rgba(38, 142, 228, 0.5);
-}
-.form imput[type="submit"] {
-  padding: 0.3rem 0.5rem;
-  border: 1px solid #83f0a3;
-  font-size: 1.1rem;
+  background-color: #b0eacd;
 }
 
 .error-notice {
   margin: 1rem;
   padding: 0.5rem;
   border: 1px solid rgb(253, 118, 118);
-  border-radius: 8px;
+  border-radius: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -131,7 +95,7 @@ body {
   height: 20px;
   border-radius: 50%;
   background-color: rgb(253, 118, 118);
-  color: #fff;
+  color: #f9fcfb;
 }
 
 /* media queries */

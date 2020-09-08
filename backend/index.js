@@ -27,4 +27,4 @@ mongoose.connect(
 
 // setup routes
 app.use("/users", require("./routes/userRouter"));
-app.use("/stories", require("./routes/noteRouter"));
+app.use("/notes", require("./routes/noteRouter"));

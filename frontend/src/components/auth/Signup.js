@@ -12,9 +12,11 @@ import {
   Segment,
 } from "semantic-ui-react";
 
-export default function Login() {
+export default function Signup() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [passwordCheck, setPasswordCheck] = useState();
+  const [displayName, setDisplayName] = useState();
   const [error, setError] = useState();
 
   const { setUserData } = useContext(UserContext);
@@ -25,11 +27,12 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const loginUser = { email, password };
-      const loginRes = await Axios.post(
-        "http://localhost:5000/users/login",
-        loginUser
-      );
+      const newUser = { email, password, passwordCheck, displayName };
+      await Axios.post("http://localhost:5000/users/signup", newUser);
+      const loginRes = await Axios.post("http://localhost:5000/users/login", {
+        email,
+        password,
+      });
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
@@ -40,12 +43,14 @@ export default function Login() {
       err.response.data.msg && setError(err.response.data.msg);
     }
   };
+
   return (
     <Grid textAlign="center" style={{ height: "80vh" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="blue" textAlign="center">
-          Log in to your account
+          Sign up to MERN notes
         </Header>
+
         <Form size="large">
           <Segment stacked>
             <Form.Input
@@ -57,15 +62,30 @@ export default function Login() {
             />
             <Form.Input
               fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="Display name"
+              onChange={(e) => setDisplayName(e.target.value)}
+            />
+            <Form.Input
+              fluid
               icon="lock"
               iconPosition="left"
               placeholder="Password"
               type="password"
               onChange={(e) => setPassword(e.target.value)}
             />
+            <Form.Input
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Verify password"
+              type="password"
+              onChange={(e) => setPasswordCheck(e.target.value)}
+            />
 
             <Button color="blue" fluid size="large" onClick={submit}>
-              Login
+              Sign up
             </Button>
             {error && (
               <ErrorNotice
@@ -76,7 +96,7 @@ export default function Login() {
           </Segment>
         </Form>
         <Message>
-          New to us? <a href="./signup">Sign Up</a>
+          Already have an account? <a href="./login">Log In</a>
         </Message>
       </Grid.Column>
     </Grid>

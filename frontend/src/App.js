@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Axios from "axios";
-import Header from "./components/layout/Header";
+import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
+import Signup from "./components/auth/Signup";
+import EditNote from "./components/notes/EditNote";
+import AddNote from "./components/notes/AddNote";
 import UserContext from "./context/UserContext";
+import { Container } from "semantic-ui-react";
 
-import "./style.css";
+import "semantic-ui-css/semantic.min.css";
+
+//import "./style.css";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -15,7 +20,7 @@ function App() {
     user: undefined,
   });
 
-  // This runs once when the app starts
+  // With empty deps array [], this runs once when the app starts, similar to componentDidMount()
   useEffect(() => {
     const checkLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
@@ -50,14 +55,16 @@ function App() {
       <BrowserRouter>
         {/* Context creates a state (in its value) that it can share with other components (accessed via useContext hook/function). */}
         <UserContext.Provider value={{ userData, setUserData }}>
-          <Header />
-          <div className="container">
+          <Navbar />
+          <Container>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/addnote" component={AddNote} />
+              <Route path="/editnote/:id" component={EditNote} />
             </Switch>
-          </div>
+          </Container>
         </UserContext.Provider>
       </BrowserRouter>
     </>

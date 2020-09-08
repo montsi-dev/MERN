@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../../context/UserContext";
+import { Button } from "semantic-ui-react";
 
 export default function AuthOptions() {
   const { userData, setUserData } = useContext(UserContext);
 
   const history = useHistory();
 
-  const register = () => history.push("/register");
+  const signup = () => history.push("/signup");
   const login = () => history.push("/login");
   const logout = () => {
     setUserData({
@@ -15,18 +16,27 @@ export default function AuthOptions() {
       user: undefined,
     });
     localStorage.setItem("auth-token", "");
+    history.push("/");
   };
 
   return (
-    <nav className="auth-options">
+    <>
       {userData.user ? (
-        <button onClick={logout}>Log out</button>
+        <Button inverted floated="right" onClick={logout}>
+          Log out
+        </Button>
       ) : (
         <>
-          <button onClick={register}>Register</button>
-          <button onClick={login}>Log in</button>
+          <Button.Group floated="right">
+            <Button inverted onClick={login}>
+              Log in
+            </Button>
+            <Button inverted onClick={signup}>
+              Sign up
+            </Button>
+          </Button.Group>
         </>
       )}
-    </nav>
+    </>
   );
 }

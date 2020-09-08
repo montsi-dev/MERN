@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const User = require("../models/userModel");
 
-router.post("/register", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     let { email, password, passwordCheck, displayName } = req.body;
 
@@ -55,7 +55,7 @@ router.post("/login", async (req, res) => {
     if (!user)
       return res
         .status(400)
-        .json({ msg: "No account with this email has been registered." });
+        .json({ msg: "No account with this email has been signed up." });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
